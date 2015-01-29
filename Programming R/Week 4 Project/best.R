@@ -4,6 +4,7 @@ best <- function(state, outcome) {
   ## Check that state and outcome are valid
   states <- outcome$states
   validOutcome <- c("heart attack", "heart failure", "pneumonia")
+  
   ## Return hospital name in that state with lowest 30-day death
   ## rate
 }
