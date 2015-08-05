@@ -1,0 +1,65 @@
+setwd("C:\\Users\\me_000\\Documents\\GitHub\\datasciencecoursera\\Getting and Cleanning Data\\quizes")
+
+if(!file.exists("data")) {
+  dir.create("data")
+}
+
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv"
+destFile <- ".\\data\\acs_usc_2006_micro.csv"
+
+download.file(fileUrl, destfile = destFile)
+list.files(".\\data")
+
+dateDownloaded <- date()
+dateDownloaded
+
+ascData <- read.csv(destFile)
+
+# First we are looking at the VAL column. 24 means over 1million
+ascData[,'VAL']
+values = ascData[,'VAL']
+values <- values[!is.na(values)]
+
+# Now its a vector of ints. Just do a filter on 24
+propertyValueOver1M <- values[values == 24]
+
+#####################################################
+#Checking the Frequency of FES column
+FES <- ascData$FES
+FES.freq = table(FES)
+FES.freq
+
+# I think the combining of household and job is bad. 
+
+#####################################################
+# Want to read in a specific set of columns.
+install.packages("xlsx") # Make sure you have Java 8 x64 installed. if you are using RStudio x64. 
+library(xlsx)
+
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx"
+destFile <- ".\\data\\FDATA.xlsx"
+download.file(fileUrl, destfile = destFile, mode='wb') # Annoyingly you must use the mode='wb' because .xlsx reader below is looking for it to be in binary format. Which makes sense when you think of it.
+list.files(".\\data")
+
+dateDownloaded <- date()
+dateDownloaded
+
+sheetIndex <- 1
+colIndex <- 7:15
+rowIndex <- 18:23
+
+ngapData <- read.xlsx(destFile, sheetIndex)
+
+dat <- read.xlsx(destFile, sheetIndex, rowIndex = rowIndex, colIndex = colIndex)
+
+#####################################################
+# Reading XML
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml"
+destFile <- ".\\data\\BmoreRestaurants.xml"
+
+download.file(fileUrl, destfile = destFile)
+list.files(".\\data")
+dateDownloaded <- date()
+dateDownloaded
+
+
