@@ -54,6 +54,8 @@ dat <- read.xlsx(destFile, sheetIndex, rowIndex = rowIndex, colIndex = colIndex)
 
 #####################################################
 # Reading XML
+install.packages("XML")
+library(XML)
 fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml"
 destFile <- ".\\data\\BmoreRestaurants.xml"
 
@@ -62,4 +64,24 @@ list.files(".\\data")
 dateDownloaded <- date()
 dateDownloaded
 
+doc <- xmlTreeParse(destFile, useInternal=TRUE)
+rootNode <- xmlRoot(doc)
+xmlName(rootNode)
+zipCodes <- xpathSApply(rootNode, "//zipcode", xmlValue)
+zipCodes21231 <- zipCodes[zipCodes == "21231"]
+length(zipCodes21231)
 
+####################################################
+# FRead
+install.packages("data.table")
+library("data.table")
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv"
+destFile <- ".\\data\\ss0pid.csv"
+
+download.file(fileUrl, destfile = destFile)
+list.files(".\\data")
+dateDownloaded <- date()
+dateDownloaded
+
+DT <- fread(destFile)
+DT[,mean(pwgtp15),by=SEX] 
