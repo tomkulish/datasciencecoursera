@@ -5,5 +5,5 @@
 setwd("C:\\Users\\me_000\\Documents\\GitHub\\datasciencecoursera\\Getting and Cleanning Data\\quizes")
 
 ############################################################
-#  Talk to the GitLab API
+#  Talk to the GitHub API
 ############################################################
