@@ -1,3 +1,8 @@
+#########
+# Week 1 Examples and work for Getting and Cleanning Data with R
+# 
+#########
+
 setwd("C:\\Users\\me_000\\Documents\\GitHub\\datasciencecoursera\\Getting and Cleanning Data\\quizes")
 
 if(!file.exists("data")) {
