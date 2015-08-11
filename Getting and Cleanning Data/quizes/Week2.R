@@ -57,3 +57,37 @@ dateDownloaded
 acs <- read.csv(destFile)
 sqldf("SELECT * FROM acs")
 sqldf("select pwgtp1 from acs where AGEP < 50")
+
+
+##########################################
+# HTML Parsing
+##########################################
+con = url("http://biostat.jhsph.edu/~jleek/contact.html")
+htmlCode = readLines(con)
+close(con)
+htmlCode
+nchar(htmlCode[10])
+nchar(htmlCode[20])
+nchar(htmlCode[30])
+nchar(htmlCode[100])
+
+#######################################
+# Reading .for file
+#########################################
+if(!file.exists("data")) {
+  dir.create("data")
+}
+
+fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fwksst8110.for "
+destFile <- ".\\data\\8110.for"
+
+download.file(fileUrl, destfile = destFile)
+list.files(".\\data")
+
+dateDownloaded <- date()
+dateDownloaded
+
+fwfFormat <- c(10,5,4,4,5,4,4,5,4,4,5,4,4)
+fwf <- read.fwf(destFile,fwfFormat, skip=4)
+x <- fwf[,6]
+sum(x)
