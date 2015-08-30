@@ -60,7 +60,7 @@ GDP <- GDP[5:194,]
 sapply(GDP, mode)
 GDP <- rename(GDP, short = X, rank = Gross.domestic.product.2012, long = X.2, dollars = X.3)
 GDP <- transform(GDP, rank = as.numeric(rank))
-#mergedData <- merge(GDP, EDStats, by.x ="short", by.y="CountryCode")
+
 #mergedSorted <- arrange(mergedData, desc(rank))
 
 removeComma <- function(x) {gsub(",","", x)}
@@ -71,4 +71,27 @@ gdpNoSpace <- sapply(gdpNoComma, removeSpace)
 
 gdpClean <- as.numeric(gdpNoSpace)
 mean(gdpClean)
+
+
+#################
+# Check to see if data is present, how many end in June.
+#################
+mergedData <- merge(GDP, EDStats, by.x ="short", by.y="CountryCode")
+
+## Pull out special notes column
+grep('Fiscal year end: June.*', mergedData$Special.Notes)
+## count June using "grep"
+
+
+###############
+# quantmod
+#################
+install.packages("quantmod")
+library(quantmod)
+
+amzn = getSymbols("AMZN",auto.assign=FALSE)
+sampleTimes = index(amzn)
+
+collected2012 <- grep('2012-.*', sampleTimes)
+
 
