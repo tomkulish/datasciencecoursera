@@ -81,3 +81,30 @@ airquality <- transform(airquality, Month = factor(Month))
 boxplot(Ozone ~ Month, airquality, xlab = "Month", ylab = "Ozone (ppb)")
 
 # par() GLOBAL settings
+# Base Plot with Annotation
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", type = "n"))
+with(subset(airquality, Month == 5), points(Wind, Ozone, col="blue"))
+with(subset(airquality, Month != 5), points(Wind, Ozone, col="red"))
+legend("topright", pch=1, col = c("blue", "red"), legend=c("May", "Other Months"))
+
+# Model line in trend
+# pch = 20 is a small filled in circle
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", pch = 20))
+model <- lm(Ozone ~ Wind, airquality)
+abline(model, lwd=2)
+
+# 1 row 2 columns
+par(mfrow = c(1,2))
+with(airquality, {
+  plot(Wind, Ozone, main = "Ozone and Wind")
+  plot(Solor.R, Ozone, main = "Ozone and Solar Radiation")
+})
+
+# Multiple rows and a title
+par(mfrow=c(1,3), mar = c(4,4,2,1), oma = c(0,0,2,0))
+with(airquality, {
+  plot(Wind, Ozone, main = "Ozone and Wind")
+  plot(Solor.R, Ozone, main = "Ozone and Solar Radiation")
+  plot(Solor.R, Ozone, main = "Ozone and Solar Radiation")
+  mtext("Ozone and Wather in New York City", outer = TRUE)
+})
